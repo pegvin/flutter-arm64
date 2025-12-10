@@ -1,0 +1,24 @@
+name: Build Flutter ARM64 Linux SDK
+on:
+  push:
+    branches:
+      - flutter-arm64
+
+jobs:
+  hello:
+    runs-on: ubuntu-24.04-arm
+    steps:
+      - name: Update & Install Packages
+        run: |
+          sudo apt update -y
+          sudo apt upgrade -y
+          sudo apt install -y git clang cmake ninja-build pkg-config libgtk-3-dev libstdc++-12-dev
+
+      - name: Get Flutter
+        run: |
+          git clone --depth 1 --branch 3.38.4 https://github.com/flutter/flutter.git
+          ./flutter/bin/flutter --version
+          ./flutter/bin/flutter doctor -v
+
+      - name: Print Hello World
+        run: 'echo "Hello World"'

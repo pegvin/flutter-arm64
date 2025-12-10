@@ -2,10 +2,10 @@ name: Build Flutter ARM64 Linux SDK
 on:
   push:
     branches:
-      - flutter-arm64
+      - master
 
 jobs:
-  hello:
+  build:
     runs-on: ubuntu-24.04-arm
     steps:
       - name: Update & Install Packages

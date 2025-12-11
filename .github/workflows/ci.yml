@@ -22,17 +22,18 @@ jobs:
       - name: Build
         run: |
           git clone --depth 1 --branch "${{ inputs.version }}" https://github.com/flutter/flutter.git
+          ./flutter/bin/flutter update-packages
+          ./flutter/bin/flutter precache
           ./flutter/bin/flutter --version
           ./flutter/bin/flutter doctor -v
-          rm -rf flutter/.git/
 
       - name: Compress Artifacts
         run: |
-          tar -cf - flutter/ | xz -9 -T0 -c - > "flutter_linux-arm64_${{ inputs.version }}-stable.tar.xz"
+          tar -cf - flutter/ | xz -9 -T0 -c - > "flutter_linux-arm64_${{ inputs.version }}.tar.xz"
 
       - uses: ncipollo/release-action@v1
         with:
-          artifacts: "flutter_linux-arm64_${{ inputs.version }}-stable.tar.xz"
+          artifacts: "flutter_linux-arm64_${{ inputs.version }}.tar.xz"
           artifactErrorsFailBuild: true
           name: "Flutter Linux ARM64 SDK (${{ inputs.version }})"
           omitBody: true
